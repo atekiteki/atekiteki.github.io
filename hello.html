@@ -1,7 +1,40 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html>
-    <body>
-        <h1>Hello World</h1>
-    </body>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Craftzdog&apos;s Room Conditions</title>
+
+    <script src="lib/highcharts.js"></script>
+    <script src="lib/dark-unica.js"></script>
+    <script src="lib/moment.min.js"></script>
+    <script src="lib/moment-timezone-with-data-2012-2022.min.js"></script>
+
+    <script src="lib/firebase-app.js"></script>
+    <script src="lib/firebase-auth.js"></script>
+    <script src="lib/firebase-firestore.js"></script>
+
+    <link rel="stylesheet" href="lib/semantic.min.css" />
+    <link rel="stylesheet" href="lib/semantic-icon.css" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+
+    <div class="ui container">
+      <h1 class="align center">My Room Conditions <i class="home icon"></i></h1>
+      <div class="ui stackable grid">
+        <div id="temperature" class="eight wide column" style="width:100%; height:400px;"></div>
+        <div id="humidity" class="eight wide column" style="width:100%; height:400px;"></div>
+        <div id="pressure" class="eight wide column" style="width:100%; height:400px;"></div>
+        <div id="light" class="eight wide column" style="width:100%; height:400px;"></div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+      retrieveData().then(data => {
+        renderChart(data)
+      })
+    </script>
+  </body>
 </html>
