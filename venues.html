@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ミニバス大会 会場一覧</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5722;
+    --navy: #0D1B2A;
+    --cream: #F5F0E8;
+    --gold: #F4A900;
+    --gray: #8A8A8A;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans JP',sans-serif; background:var(--cream); color:var(--navy); }
+
+  header { background:var(--navy); color:white; padding:20px 16px 24px; position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; right:-30px; top:-30px; width:160px; height:160px; border-radius:50%; background:var(--orange); opacity:0.15; }
+  .header-label { font-size:11px; letter-spacing:3px; color:var(--orange); margin-bottom:6px; }
+  header h1 { font-size:22px; font-weight:900; line-height:1.3; position:relative; z-index:1; }
+  header h1 span { color:var(--orange); }
+  .header-sub { margin-top:10px; font-size:12px; color:rgba(255,255,255,0.55); position:relative; z-index:1; }
+
+  .stats-bar { display:flex; background:var(--orange); color:white; text-align:center; }
+  .stat { flex:1; padding:12px 8px; border-right:1px solid rgba(255,255,255,0.2); }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Bebas Neue',cursive; font-size:26px; line-height:1; display:block; }
+  .stat-label { font-size:10px; opacity:0.85; margin-top:2px; }
+
+  .tab-wrapper { position:sticky; top:0; z-index:100; background:var(--cream); padding:12px 16px 0; border-bottom:2px solid rgba(0,0,0,0.06); }
+  .tabs { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab-btn { flex-shrink:0; padding:8px 16px; border:none; border-radius:20px 20px 0 0; background:transparent; color:var(--gray); font-family:'Noto Sans JP',sans-serif; font-size:13px; font-weight:700; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .tab-btn.active { color:var(--orange); border-bottom-color:var(--orange); background:rgba(255,87,34,0.06); }
+
+  .content { padding:16px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  .venue-card { background:white; border-radius:16px; box-shadow:var(--shadow); margin-bottom:12px; overflow:hidden; animation:slideUp 0.3s ease both; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .venue-accent { width:6px; flex-shrink:0; }
+  .venue-header { display:flex; align-items:stretch; }
+  .venue-main { flex:1; padding:14px 14px 14px 12px; }
+  .venue-name { font-size:16px; font-weight:900; line-height:1.3; margin-bottom:4px; }
+  .venue-address { font-size:11px; color:var(--gray); margin-bottom:8px; }
+  .venue-leagues { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+  .league-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:20px; font-size:11px; font-weight:700; }
+  .day-tag { font-size:9px; padding:2px 6px; border-radius:10px; background:rgba(0,0,0,0.06); color:#555; font-weight:700; }
+  .map-btn { display:block; width:100%; padding:10px; border:none; background:var(--navy); color:white; font-family:'Noto Sans JP',sans-serif; font-size:12px; font-weight:700; cursor:pointer; text-decoration:none; text-align:center; letter-spacing:1px; transition:background 0.2s; }
+  .map-btn:hover { background:var(--orange); }
+
+  .legend { background:white; border-radius:12px; padding:14px; margin-bottom:16px; box-shadow:var(--shadow); }
+  .legend-title { font-size:12px; font-weight:700; color:var(--gray); margin-bottom:8px; letter-spacing:1px; }
+  .legend-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .legend-item { text-align:center; }
+  .legend-dot { width:28px; height:28px; border-radius:50%; margin:0 auto 4px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',cursive; font-size:16px; color:white; }
+  .legend-label { font-size:10px; color:var(--gray); }
+
+  .search-box { display:flex; align-items:center; background:white; border-radius:12px; box-shadow:var(--shadow); padding:10px 14px; margin-bottom:12px; gap:8px; }
+  .search-box input { border:none; outline:none; flex:1; font-family:'Noto Sans JP',sans-serif; font-size:14px; color:var(--navy); background:transparent; }
+  .filter-row { display:flex; gap:8px; margin-bottom:12px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px; }
+  .filter-row::-webkit-scrollbar { display:none; }
+  .filter-chip { flex-shrink:0; padding:6px 14px; border-radius:20px; border:2px solid transparent; background:white; font-family:'Noto Sans JP',sans-serif; font-size:12px; font-weight:700; color:var(--gray); cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:all 0.2s; }
+  .filter-chip.active { background:var(--orange); color:white; }
+  #team-count { text-align:right; font-size:11px; color:var(--gray); margin-bottom:8px; }
+
+  .team-card { background:white; border-radius:12px; box-shadow:var(--shadow); padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:12px; animation:slideUp 0.25s ease both; }
+  .team-num { font-family:'Bebas Neue',cursive; font-size:22px; color:var(--orange); width:28px; text-align:center; flex-shrink:0; }
+  .team-info { flex:1; }
+  .team-name { font-size:14px; font-weight:700; }
+  .team-pref { font-size:11px; color:var(--gray); margin-top:2px; }
+  .team-league-badge { font-family:'Bebas Neue',cursive; font-size:18px; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Mini Basketball Tournament</div>
+  <h1>ミニバス大会<br><span>会場・チーム一覧</span></h1>
+  <div class="header-sub">全会場 福井県内 ／ 40チーム参加</div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">7</span><div class="stat-label">会場数</div></div>
+  <div class="stat"><span class="stat-num">40</span><div class="stat-label">参加チーム</div></div>
+  <div class="stat"><span class="stat-num">8</span><div class="stat-label">リーグ</div></div>
+  <div class="stat"><span class="stat-num">2</span><div class="stat-label">試合日</div></div>
+</div>
+
+<div class="tab-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('venues',this)">🏟 会場</button>
+    <button class="tab-btn" onclick="switchTab('teams',this)">👕 チーム</button>
+  </div>
+</div>
+
+<div class="content">
+  <div id="tab-venues" class="tab-panel active">
+    <div class="legend">
+      <div class="legend-title">リーグカラー凡例</div>
+      <div class="legend-grid" id="legend-grid"></div>
+    </div>
+    <div id="venue-list"></div>
+  </div>
+
+  <div id="tab-teams" class="tab-panel">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="search-input" placeholder="チーム名・都道府県で検索" oninput="filterTeams()">
+    </div>
+    <div class="filter-row" id="filter-row">
+      <button class="filter-chip active" onclick="setLeague('all',this)">すべて</button>
+    </div>
+    <div id="team-count"></div>
+    <div id="team-list"></div>
+  </div>
+</div>
+
+<script>
+const LC = {a:'#E53935',b:'#8E24AA',c:'#1E88E5',d:'#00897B',e:'#F4511E',f:'#3949AB',g:'#43A047',h:'#6D4C41'};
+
+const venues = [
+  {name:'トリムパークかなづ',address:'あわら市山室67-30',leagues:[{l:'a',d:'3日・4日'},{l:'d',d:'3日'}],map:'https://maps.google.com/?q=36.2175894,136.2502715',note:'北端。芝生公園内の体育館。'},
+  {name:'セーレンドリームアリーナ',address:'福井市福町3-20（県立体育館）',leagues:[{l:'b',d:'4日'},{l:'c',d:'3日'},{l:'f',d:'3日'}],map:'https://maps.google.com/?q=36.0537069,136.1820012',note:'福井市スポーツ公園内。最大規模の会場。'},
+  {name:'鯖江市総合体育館',address:'鯖江市東鯖江3-6-10',leagues:[{l:'b',d:'3日'}],map:'https://maps.google.com/?q=35.9441707,136.1976983',note:'南エリア。鯖江市の中心部。'},
+  {name:'丸岡体育館',address:'坂井市丸岡町霞町3-1-2',leagues:[{l:'d',d:'3日'}],map:'https://maps.google.com/?q=36.1535296,136.2729056',note:'丸岡城のそば。坂井市内。'},
+  {name:'大野エキサイト',address:'大野市桜塚町601',leagues:[{l:'e',d:'3日'},{l:'g',d:'4日'},{l:'h',d:'4日'}],map:'https://maps.google.com/?q=35.9716409,136.5035705',note:'東端の山間部。他会場から車で40〜50分。'},
+  {name:'南体育館',address:'福井市下安丸町33-1',leagues:[{l:'e',d:'4日'},{l:'f',d:'4日'},{l:'g',d:'3日'}],map:'https://maps.google.com/?q=36.0230512,136.2213391',note:'福井市南部。新幹線線路近く。'},
+  {name:'西体育館',address:'福井市飯塚町10-8',leagues:[{l:'h',d:'3日'}],map:'https://maps.google.com/?q=36.0675563,136.1833454',note:'福井市西エリア。コンパクトな施設。'},
+];
+
+const teams = [
+  {no:1,name:'立田ミニバスケットボールクラブ女子',pref:'愛知',l:'a'},
+  {no:2,name:'草津OSC女子',pref:'滋賀',l:'a'},
+  {no:3,name:'下諏訪クラブU12',pref:'長野',l:'a'},
+  {no:4,name:'加賀ミニバスケットボールクラブ',pref:'石川',l:'a'},
+  {no:5,name:'金津MBC女子',pref:'福井',l:'a'},
+  {no:6,name:'瀬田スポーツ少年団ミニバスケットボール部(女子)',pref:'滋賀',l:'b'},
+  {no:7,name:'桜島ミニバスケットボールクラブ',pref:'三重',l:'b'},
+  {no:8,name:'富樫ミニバスケットボールクラブ',pref:'石川',l:'b'},
+  {no:9,name:'MA Rush BBC',pref:'福井',l:'b'},
+  {no:10,name:'河合スポーツ少年団ミニバスケットボール部',pref:'福井',l:'b'},
+  {no:11,name:'日進ミニバスケットボールクラブ',pref:'愛知',l:'c'},
+  {no:12,name:'桃山深草ミニバスケットボールクラブ',pref:'京都',l:'c'},
+  {no:13,name:'稲生フラッフィーラビッツ',pref:'三重',l:'c'},
+  {no:14,name:'砺波東部ミニバスケットボールクラブ',pref:'富山',l:'c'},
+  {no:15,name:'中藤PROUD',pref:'福井',l:'c'},
+  {no:16,name:'深井リトルペッパーズ',pref:'大阪',l:'d'},
+  {no:17,name:'禹徳ミニバスケットボールクラブ フェニックス',pref:'京都',l:'d'},
+  {no:18,name:'田上ミニバスケットボールクラブ女子',pref:'石川',l:'d'},
+  {no:19,name:'芳野 Y－girls',pref:'富山',l:'d'},
+  {no:20,name:'東安居ミニバスケットボールクラブ女子',pref:'福井',l:'d'},
+  {no:21,name:'豊明 Ciel',pref:'愛知',l:'e'},
+  {no:22,name:'松阪East side',pref:'三重',l:'e'},
+  {no:23,name:'Rabbits NY U12',pref:'長野',l:'e'},
+  {no:24,name:'TeamWY',pref:'福井',l:'e'},
+  {no:25,name:'下庄MBS',pref:'福井',l:'e'},
+  {no:26,name:'バリオークラス',pref:'大阪',l:'f'},
+  {no:27,name:'ウッデイシャイニングスター',pref:'兵庫',l:'f'},
+  {no:28,name:'新庄RENKERS',pref:'奈良',l:'f'},
+  {no:29,name:'泉野ミニバスケットボールクラブ女子',pref:'石川',l:'f'},
+  {no:30,name:'松本ミニバスケットボールスポーツ少年団',pref:'福井',l:'f'},
+  {no:31,name:'千里中央ORIONS',pref:'大阪',l:'g'},
+  {no:32,name:'櫛形小笠原ミニバス',pref:'山梨',l:'g'},
+  {no:33,name:'GREEN SPUNKYS U12',pref:'長野',l:'g'},
+  {no:34,name:'Little Clover',pref:'石川',l:'g'},
+  {no:35,name:'有終MBS',pref:'福井',l:'g'},
+  {no:36,name:'詳徳ミニバスケットボール教室女子',pref:'京都',l:'h'},
+  {no:37,name:'LYNXミニバスケットボール教室',pref:'三重',l:'h'},
+  {no:38,name:'寺井ダイヤモンドフィエット',pref:'石川',l:'h'},
+  {no:39,name:"今富DEER'S",pref:'福井',l:'h'},
+  {no:40,name:'木田Vラビッツ',pref:'福井',l:'h'},
+];
+
+// Legend
+const lg = document.getElementById('legend-grid');
+Object.entries(LC).forEach(([l,c]) => {
+  lg.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${c}">${l.toUpperCase()}</div><div class="legend-label">リーグ${l.toUpperCase()}</div></div>`;
+});
+
+// Venues
+const vl = document.getElementById('venue-list');
+venues.forEach((v,i) => {
+  const badges = v.leagues.map(({l,d}) =>
+    `<span class="league-badge" style="background:${LC[l]}22;color:${LC[l]}"><span style="font-weight:900">リーグ${l.toUpperCase()}</span><span class="day-tag">${d}</span></span>`
+  ).join('');
+  vl.innerHTML += `<div class="venue-card" style="animation-delay:${i*0.05}s">
+    <div class="venue-header">
+      <div class="venue-accent" style="background:${LC[v.leagues[0].l]}"></div>
+      <div class="venue-main">
+        <div class="venue-name">${v.name}</div>
+        <div class="venue-address">📍 ${v.address}</div>
+        <div class="venue-leagues">${badges}</div>
+        <div style="font-size:11px;color:#999">${v.note}</div>
+      </div>
+    </div>
+    <a class="map-btn" href="${v.map}" target="_blank">📍 Googleマップで開く</a>
+  </div>`;
+});
+
+// Filter chips
+const fr = document.getElementById('filter-row');
+Object.keys(LC).forEach(l => {
+  fr.innerHTML += `<button class="filter-chip" onclick="setLeague('${l}',this)"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${LC[l]};margin-right:4px;vertical-align:middle"></span>リーグ${l.toUpperCase()}</button>`;
+});
+
+let curLeague = 'all';
+
+function renderTeams(list) {
+  document.getElementById('team-count').textContent = list.length + 'チーム表示中';
+  const tl = document.getElementById('team-list');
+  if (!list.length) { tl.innerHTML = '<div style="text-align:center;padding:40px;color:#aaa">チームが見つかりません</div>'; return; }
+  tl.innerHTML = list.map((t,i) =>
+    `<div class="team-card" style="animation-delay:${i*0.03}s;border-left:4px solid ${LC[t.l]}">
+      <div class="team-num">${t.no}</div>
+      <div class="team-info"><div class="team-name">${t.name}</div><div class="team-pref">${t.pref}</div></div>
+      <div class="team-league-badge" style="background:${LC[t.l]}">${t.l.toUpperCase()}</div>
+    </div>`
+  ).join('');
+}
+
+function filterTeams() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  renderTeams(teams.filter(t =>
+    (curLeague === 'all' || t.l === curLeague) &&
+    (t.name.toLowerCase().includes(q) || t.pref.includes(q))
+  ));
+}
+
+function setLeague(l, el) {
+  curLeague = l;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterTeams();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'teams') filterTeams();
+}
+
+filterTeams();
+</script>
+</body>
+</html>
