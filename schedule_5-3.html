@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ミニバス 5月3日(日) 日程表</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --navy: #0D1B3E;
+    --sky: #4AABDB;
+    --gold: #F5C842;
+    --white: #FAFAFA;
+    --gray-light: #F0F2F7;
+    --gray-mid: #B8C0CC;
+    --gray-dark: #4A5568;
+    --male-color: #1A6FBF;
+    --female-color: #C2185B;
+    --bg: #0A1628;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #0D1B3E 0%, #1a2d5a 60%, #0D1B3E 100%);
+    border-bottom: 3px solid var(--orange);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  .header-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .header-text h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .header-text p {
+    font-size: 0.8rem;
+    color: var(--gray-mid);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  .header-badge {
+    margin-left: auto;
+    background: var(--orange);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ===== TABS ===== */
+  .tabs-wrapper {
+    background: #111d35;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs-wrapper::-webkit-scrollbar { display: none; }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 12px 20px;
+    white-space: nowrap;
+    min-width: max-content;
+  }
+
+  .tab {
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: none;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--gray-mid);
+  }
+
+  .tab:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+  .tab.active { background: var(--orange); color: white; }
+
+  /* ===== CONTENT ===== */
+  .content { padding: 24px 20px; max-width: 1100px; margin: 0 auto; }
+
+  .league-section { display: none; }
+  .league-section.active { display: block; }
+
+  /* ===== VENUE CARD ===== */
+  .venue-card {
+    background: #111d35;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .venue-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .venue-icon { font-size: 1.3rem; }
+
+  .venue-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--sky);
+  }
+
+  .venue-info {
+    font-size: 0.78rem;
+    color: var(--gray-mid);
+    margin-left: auto;
+  }
+
+  /* ===== LEAGUE PAIR ===== */
+  .league-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .league-col {
+    padding: 16px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .league-col:last-child { border-right: none; }
+
+  .league-label {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .league-label.male {
+    background: rgba(26,111,191,0.25);
+    color: #7EC8F0;
+    border: 1px solid rgba(26,111,191,0.4);
+  }
+
+  .league-label.female {
+    background: rgba(194,24,91,0.2);
+    color: #F48FB1;
+    border: 1px solid rgba(194,24,91,0.4);
+  }
+
+  /* ===== GAME TABLE ===== */
+  .game-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .game-row {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: background 0.15s;
+  }
+
+  .game-row:hover { background: rgba(255,255,255,0.08); }
+
+  .game-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .game-num {
+    background: var(--orange);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 900;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .game-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+
+  .game-court {
+    font-size: 0.72rem;
+    color: var(--gray-mid);
+    margin-left: auto;
+  }
+
+  .game-teams {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px;
+  }
+
+  .team-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+    flex: 1;
+    text-align: center;
+  }
+
+  .vs-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+
+  .team-pref {
+    font-size: 0.65rem;
+    color: var(--gray-mid);
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .team-block { flex: 1; text-align: center; }
+
+  .judge-row {
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--gray-mid);
+  }
+
+  .judge-label {
+    background: rgba(255,255,255,0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.68rem;
+    color: var(--gray-mid);
+    white-space: nowrap;
+  }
+
+  .judge-names { color: var(--gray-mid); }
+
+  /* ===== SCHEDULE INFO ===== */
+  .schedule-info {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: rgba(255,107,26,0.08);
+    border: 1px solid rgba(255,107,26,0.2);
+    border-radius: 12px;
+    font-size: 0.82rem;
+    color: #FFB380;
+  }
+
+  .info-item { display: flex; align-items: center; gap: 6px; }
+  .info-icon { font-size: 1rem; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .league-pair { grid-template-columns: 1fr; }
+    .league-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .league-col:last-child { border-bottom: none; }
+    header { padding: 16px 16px; }
+    .header-text h1 { font-size: 1.4rem; }
+    .content { padding: 16px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🏀</div>
+  <div class="header-text">
+    <h1>MINI BASKETBALL</h1>
+    <p>5月3日（日）試合日程表</p>
+  </div>
+  <div class="header-badge">全8リーグ</div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab active" onclick="showLeague('ab')">A・B リーグ</button>
+    <button class="tab" onclick="showLeague('cd')">C・D リーグ</button>
+    <button class="tab" onclick="showLeague('ef')">E・F リーグ</button>
+    <button class="tab" onclick="showLeague('gh')">G・H リーグ</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ===== A・B リーグ ===== -->
+  <div class="league-section active" id="ab">
+
+    <div class="schedule-info">
+      <div class="info-item"><span class="info-icon">🕗</span> 開場 8:30</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第2試合チームアップ 8:50〜</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第1試合チームアップ 9:10〜</div>
+      <div class="info-item"><span class="info-icon">🕔</span> 閉場 17:00</div>
+    </div>
+
+    <!-- 男子A・女子a -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">トリムパークかなづ</span>
+        <span class="venue-info">男子Ａ・女子ａリーグ　／　Iコート（奥側）・Jコート（入口側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 A リーグ ／ Iコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">1</div>
+                <div class="game-time">9:30</div>
+                <div class="game-court">Iコート（奥側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">鳳徳</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">寺井</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">立田</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">2</div>
+                <div class="game-time">10:50</div>
+                <div class="game-court">Iコート（奥側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">清和</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">立田</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">鳳徳・寺井</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">3</div>
+                <div class="game-time">12:10</div>
+                <div class="game-court">Iコート（奥側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">三国</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">鳳徳</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">清和・立田</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">4</div>
+                <div class="game-time">13:30</div>
+                <div class="game-court">Iコート（奥側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">寺井</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">清和</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">三国・鳳徳</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">5</div>
+                <div class="game-time">14:50</div>
+                <div class="game-court">Iコート（奥側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">新庄</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">三国</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">寺井・清和</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 a リーグ ／ Jコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">1</div>
+                <div class="game-time">9:30</div>
+                <div class="game-court">Jコート（入口側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">加賀</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">富樫</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">中海・河合</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">2</div>
+                <div class="game-time">10:50</div>
+                <div class="game-court">Jコート（入口側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">小矢部</div><div class="team-pref">富山県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">ＭＡ Ｒｕｓｈ</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">加賀・立田</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">3</div>
+                <div class="game-time">12:10</div>
+                <div class="game-court">Jコート（入口側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">草津</div><div class="team-pref">滋賀県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">富樫</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">唐崎・河合</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">4</div>
+                <div class="game-time">13:30</div>
+                <div class="game-court">Jコート（入口側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">ＭＡ Ｒｕｓｈ</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">下諏訪</div><div class="team-pref">長野県</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">丹南・富樫</span>
+              </div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta">
+                <div class="game-num">5</div>
+                <div class="game-time">14:50</div>
+                <div class="game-court">Jコート（入口側）</div>
+              </div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">富樫</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">瀬田</div><div class="team-pref">滋賀県</div></div>
+              </div>
+              <div class="judge-row">
+                <span class="judge-label">審判/TO</span>
+                <span class="judge-names">草津・加賀</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 男子B・女子b -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">鯖江市総合体育館</span>
+        <span class="venue-info">男子Ｂ・女子ｂリーグ　／　Gコート（奥側）・Hコート（入口側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 B リーグ ／ Gコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">唐崎</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">新庄</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">金津・草津</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">丹南</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">立田</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">唐崎・金津</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">中海</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">唐崎</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">下諏訪・金津</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">小矢部</div><div class="team-pref">富山県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">清和</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">草津・加賀</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">立田</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">丹南</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">草津・加賀</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 b リーグ ／ Hコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">中海</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">河合</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">中海・河合</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">新庄</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">瀬田</div><div class="team-pref">滋賀県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">小矢部・ＭＡ Ｒｕｓｈ</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">桜島</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">河合</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">唐崎・河合</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">ＭＡ Ｒｕｓｈ</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">富樫</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">新庄・桜島</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">瀬田</div><div class="team-pref">滋賀県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">中海</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">立田・小矢部</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== C・D リーグ ===== -->
+  <div class="league-section" id="cd">
+
+    <div class="schedule-info">
+      <div class="info-item"><span class="info-icon">🕗</span> 開場 8:30</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第2試合チームアップ 8:50〜</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第1試合チームアップ 9:10〜</div>
+      <div class="info-item"><span class="info-icon">🕔</span> 閉場 17:00</div>
+    </div>
+
+    <!-- 男子C・女子c -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">セーレン・ドリームアリーナ</span>
+        <span class="venue-info">男子Ｃ・女子ｃリーグ　／　Aコート（奥側）・Bコート（中央）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 C リーグ ／ Aコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">七尾</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">桃山深草</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松岡・鳳徳</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">LYNX</div><div class="team-pref">大阪府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">錦城</div><div class="team-pref">三重県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">嬉野・田上</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">BLACK HAWKS</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">七尾</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">泉野・深井</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">七尾</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">LYNX</div><div class="team-pref">大阪府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">瀬田・東安居</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">桃山深草</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">BLACK HAWKS</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">箕輪・芳野</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 c リーグ ／ Bコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">砺波東部</div><div class="team-pref">富山県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">瀬田</div><div class="team-pref">滋賀県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">BLACK HAWKS</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">稲生</div><div class="team-pref">愛知県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">松岡</div><div class="team-pref">三重県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">桃山深草・嬉野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">錦城</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">砺波東部</div><div class="team-pref">富山県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">桃山深草・瀬田</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">桃山深草</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">稲生</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">桃山深草・箕輪</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">松岡</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">錦城</div><div class="team-pref">三重県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">LYNX・稲生</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 男子D・女子d -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">丸岡体育館</span>
+        <span class="venue-info">男子Ｄ・女子ｄリーグ　／　Oコート（奥側）・Pコート（入口側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 D リーグ ／ Oコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">錦城</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">田上</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">日進・中藤</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">箕輪</div><div class="team-pref">長野県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">嬉野</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">泉野・東安居</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">松岡</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">中藤</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">砺波東部・桃山深草</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">嬉野</div><div class="team-pref">愛知県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">稲生</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">稲生・日進</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">泉野</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">BLACK HAWKS</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">桃山深草・稲生</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 d リーグ ／ Pコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">東安居</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">泉野</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">中藤・泉野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">深井</div><div class="team-pref">大阪府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">鳳徳</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">箕輪・芳野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">芳野</div><div class="team-pref">長野県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">田上</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松岡・深井</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">鳳徳</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">深井</div><div class="team-pref">大阪府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">瀬田・鳳徳</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">田上</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">芳野</div><div class="team-pref">長野県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">嬉野・東安居</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== E・F リーグ ===== -->
+  <div class="league-section" id="ef">
+
+    <div class="schedule-info">
+      <div class="info-item"><span class="info-icon">🕗</span> 開場 8:30</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第2試合チームアップ 8:50〜</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第1試合チームアップ 9:10〜</div>
+      <div class="info-item"><span class="info-icon">🕔</span> 閉場 17:00</div>
+    </div>
+
+    <!-- 男子E・女子e -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">大野エキサイト</span>
+        <span class="venue-info">男子Ｅ・女子ｅリーグ　／　Eコート（東側）・Fコート（西側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 E リーグ ／ Eコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">三和</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">豊明</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">木田・松本</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">SHINO</div><div class="team-pref">奈良県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">江井島</div><div class="team-pref">兵庫県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">NINJA AIRS・新庄</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">東安居</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">三和</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">バリオニクス</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">豊明</div><div class="team-pref">愛知県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">SHINO</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">宝達・泉野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">江井島</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">東安居</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">北立誠・ウッディシャイニングスター</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 e リーグ ／ Fコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">豊明 WY</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">宝達</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">東安居・泉野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">松阪</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">NINJA AIRS</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">バリオニクス・新庄</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">豊明</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">宝達</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">バリオニクス・泉野</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">Ｒabbits ＮＹ</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">バリオニクス</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松阪・北立誠</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">NINJA AIRS</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">松本</div><div class="team-pref">長野県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">豊明・松阪</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 男子F・女子f -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">セーレン・ドリームアリーナ</span>
+        <span class="venue-info">男子Ｆ・女子ｆリーグ　／　Cコート（入口側）・Dコート（サブコート）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 F リーグ ／ Cコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">Ｒabbits ＮＹ</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">下庄</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">木田・松本</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">北立誠</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">ウッディシャイニングスター</div><div class="team-pref">滋賀県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">NINJA AIRS・新庄</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">木田</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">三和</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">WY・豊明</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">NINJA AIRS</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">松阪</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">下庄・WY</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">バリオニクス</div><div class="team-pref">大阪府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">東安居</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">豊明・松阪</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 f リーグ ／ Dコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">バリオニクス</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">新庄</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">Ｒabbits ＮＹ・下庄</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">ウッディシャイニングスター</div><div class="team-pref">滋賀県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">バリオニクス</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">バリオニクス・北立誠</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">下庄</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">豊明</div><div class="team-pref">大阪府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">宝達・松本</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">北立誠</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">新庄</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">Ｒabbits ＮＹ・NINJA AIRS</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">松本</div><div class="team-pref">長野県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">ウッディシャイニングスター</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">NINJA AIRS・下庄</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== G・H リーグ ===== -->
+  <div class="league-section" id="gh">
+
+    <div class="schedule-info">
+      <div class="info-item"><span class="info-icon">🕗</span> 開場 8:30</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第2試合チームアップ 8:50〜</div>
+      <div class="info-item"><span class="info-icon">⏱</span> 第1試合チームアップ 9:10〜</div>
+      <div class="info-item"><span class="info-icon">🕔</span> 閉場 17:00</div>
+    </div>
+
+    <!-- 男子G・女子g -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">福井市南体育館</span>
+        <span class="venue-info">男子Ｇ・女子ｇリーグ　／　Kコート（奥側）・Lコート（入口側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 G リーグ ／ Kコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">伏見台</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">北白川</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">大野・木田</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">いずみ</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">青山</div><div class="team-pref">愛知県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">小坂・今富</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">松本</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">伏見台</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">川中島・ＬＹＮＸ</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">伏見台</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">いずみ</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">滋賀大附属・寺井</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">北白川</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">松本</div><div class="team-pref">三重県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">TD PANTHERS・詳徳</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 g リーグ ／ Lコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">千里中央</div><div class="team-pref">大阪府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">滋賀大附属</div><div class="team-pref">滋賀県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松本・川中島</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">GREEN SPUNKYS</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">小坂</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松本・今富</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">Little Clover</div><div class="team-pref">長野県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">千里中央</div><div class="team-pref">大阪府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">滋賀大附属・木田</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">千里中央</div><div class="team-pref">大阪府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">GREEN SPUNKYS</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">松本・青山</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">いずみ</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">Little Clover</div><div class="team-pref">長野県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">伏見台・いずみ</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 男子H・女子h -->
+    <div class="venue-card">
+      <div class="venue-header">
+        <span class="venue-icon">🏟</span>
+        <span class="venue-name">福井市西体育館</span>
+        <span class="venue-info">男子Ｈ・女子ｈリーグ　／　Mコート（奥側）・Nコート（入口側）</span>
+      </div>
+      <div class="league-pair">
+        <div class="league-col">
+          <span class="league-label male">男子 H リーグ ／ Mコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">青山</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">有終</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">櫛形小笠原・有終</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">TD PANTHERS</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">川中島</div><div class="team-pref">長野県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">寺井・今富</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">大野</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">青山</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">千里中央・Little Clover</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">小坂</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">GREEN SPUNKYS</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">有終・千里中央</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">有終</div><div class="team-pref">福井県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">大野</div><div class="team-pref">福井県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">Little Clover・GREEN SPUNKYS</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="league-col">
+          <span class="league-label female">女子 h リーグ ／ Nコート</span>
+          <div class="game-list">
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">1</div><div class="game-time">9:30</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">Little Clover</div><div class="team-pref">石川県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">寺井</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">川中島・詳徳</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">2</div><div class="game-time">10:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">櫛形小笠原</div><div class="team-pref">山梨県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">詳徳</div><div class="team-pref">三重県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">滋賀大附属・川中島</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">3</div><div class="game-time">12:10</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">ＬＹＮＸ</div><div class="team-pref">京都府</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">Little Clover</div><div class="team-pref">石川県</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">千里中央・滋賀大附属</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">4</div><div class="game-time">13:30</div></div>
+              <div class="game-trees">
+                <div class="game-teams">
+                  <div class="team-block"><div class="team-name">GREEN SPUNKYS</div><div class="team-pref">兵庫県</div></div>
+                  <div class="vs-badge">VS</div>
+                  <div class="team-block"><div class="team-name">TD PANTHERS</div></div>
+                </div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">有終・千里中央</span></div>
+            </div>
+
+            <div class="game-row">
+              <div class="game-meta"><div class="game-num">5</div><div class="game-time">14:50</div></div>
+              <div class="game-teams">
+                <div class="team-block"><div class="team-name">詳徳</div><div class="team-pref">三重県</div></div>
+                <div class="vs-badge">VS</div>
+                <div class="team-block"><div class="team-name">ＬＹＮＸ</div><div class="team-pref">京都府</div></div>
+              </div>
+              <div class="judge-row"><span class="judge-label">審判/TO</span><span class="judge-names">GREEN SPUNKYS・小坂</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+function showLeague(id) {
+  document.querySelectorAll('.league-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
